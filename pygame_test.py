@@ -1,23 +1,19 @@
 # game.py
-
-import pygame
-
-# Здесь нужно импортировать класс Board. Импорт исключений для игры
-# с графическим интерфейсом не понадобится.
 from gameparts import Board
+import pygame  # type: ignore
 
 pygame.init()
 
-# Здесь определены разные константы, например 
+# Здесь определены разные константы, например
 # размер ячейки и доски, цвет и толщина линий.
-# Эти константы используются при отрисовке графики. 
+# Эти константы используются при отрисовке графики.
 CELL_SIZE = 100
 BOARD_SIZE = 3
 WIDTH = HEIGHT = CELL_SIZE * BOARD_SIZE
 LINE_WIDTH = 15
-BG_COLOR = (28, 170, 156)
+BG_COLOR = (50, 50, 50)
 LINE_COLOR = (23, 145, 135)
-X_COLOR = (84, 84, 84)
+X_COLOR = (84, 84, 184)
 O_COLOR = (242, 235, 211)
 X_WIDTH = 15
 O_WIDTH = 15
@@ -54,8 +50,9 @@ def draw_lines():
             LINE_WIDTH
         )
 
-# Функция, которая отвечает за отрисовку фигур 
-# (крестиков и ноликов) на доске. 
+
+# Функция, которая отвечает за отрисовку фигур
+# (крестиков и ноликов) на доске.
 def draw_figures(board):
     for row in range(BOARD_SIZE):
         for col in range(BOARD_SIZE):
@@ -96,20 +93,16 @@ def draw_figures(board):
                 )
 
 
-# Сюда нужно добавить функцию save_result().
-...
-
-
-# В этой функции описана логика игры. Вам нужно её дополнить. По структуре 
-# тут всё то же самое, что было в вашем коде раньше. 
-# Но есть отличие - вместо метода display() используется 
+# В этой функции описана логика игры. Вам нужно её дополнить. По структуре
+# тут всё то же самое, что было в вашем коде раньше.
+# Но есть отличие - вместо метода display() используется
 # новая функция draw_figures().
 def main():
     game = Board()
     current_player = 'X'
     running = True
     draw_lines()
-    
+
     # В цикле обрабатываются такие события, как
     # нажатие кнопок мыши и закрытие окна.
     while running:
@@ -125,27 +118,29 @@ def main():
                 clicked_row = mouse_x // CELL_SIZE
                 clicked_col = mouse_y // CELL_SIZE
 
-                # Сюда нужно дописать код:
-                # если ячейка свободна,
-                    # то сделать ход,
-                    # проверить на победу,
-                    # проверить на ничью,
-                    # сменить игрока. 
+                """Сюда нужно дописать код:
+                если ячейка свободна,
+                    то сделать ход,
+                    проверить на победу,
+                    проверить на ничью,
+                    сменить игрока.
+                """
+
                 game.make_move(clicked_row, clicked_col, current_player)
                 draw_figures(game.board)
                 if game.check_win(current_player):
                     print(f'Победил {current_player}.')
-                    game.write_out('result.txt', f'Победил {current_player}.\n')
+                    game.write_out('log.txt', f'Победил {current_player}.\n')
                     running = False
                 elif game.is_board_full():
                     print('Ничья!')
-                    game.write_out('result.txt', 'Ничья!\n')
+                    game.write_out('log.txt', 'Ничья!\n')
                     running = False
                 current_player = 'O' if current_player == 'X' else 'X'
-        
+
         # Обновить окно игры.
         pygame.display.update()
-    
+
     # Деинициализирует все модули pygame, которые были инициализированы ранее.
     pygame.quit()
 
