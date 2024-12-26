@@ -10,9 +10,9 @@ pygame.init()
 CELL_SIZE = 100
 BOARD_SIZE = 3
 WIDTH = HEIGHT = CELL_SIZE * BOARD_SIZE
-LINE_WIDTH = 15
+LINE_WIDTH = 10
 BG_COLOR = (50, 50, 50)
-LINE_COLOR = (23, 145, 135)
+LINE_COLOR = (200, 200, 200)
 X_COLOR = (84, 84, 184)
 O_COLOR = (242, 235, 211)
 X_WIDTH = 15
@@ -125,8 +125,8 @@ def main():
                     проверить на ничью,
                     сменить игрока.
                 """
-
-                game.make_move(clicked_row, clicked_col, current_player)
+                if game.board[clicked_row][clicked_col] == ' ':
+                    game.make_move(clicked_row, clicked_col, current_player)
                 draw_figures(game.board)
                 if game.check_win(current_player):
                     print(f'Победил {current_player}.')
